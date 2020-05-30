@@ -1,6 +1,7 @@
 import pygame
 import math
 from game import Game
+
 pygame.init()
 
 
@@ -25,7 +26,9 @@ play_button_rect = play_button.get_rect()
 play_button_rect.x = math.ceil(screen.get_width() / 3.33)
 play_button_rect.y = math.ceil(screen.get_height() / 2)
 
-
+#importer la musique on click
+click = pygame.mixer.Sound('assets/sounds/click.ogg')
+ 
 # charger notre jeu
 game = Game()
 
@@ -34,7 +37,7 @@ running = True
 
 # boucle tant que la condition running est vrai
 while running:
-
+  
     # appliquer l arriere plan
     screen.blit(background, (0, -200))
 
@@ -72,6 +75,8 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             # verification si la souris est en collision avec le bouton jouer
             if play_button_rect.collidepoint(event.pos):
+                #click sound
+                click.play()
                 # mettre le jeu en mode lancer
                 game.start()
 

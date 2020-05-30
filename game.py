@@ -18,6 +18,7 @@ class Game:
         #groupe de monster
         self.all_monster = pygame.sprite.Group()
         self.pressed = {}
+        self.over = pygame.mixer.Sound('assets/sounds/game_over.ogg')
 
 
     def start(self):
@@ -30,6 +31,7 @@ class Game:
         self.all_monster = pygame.sprite.Group()
         self.player.health = self.player.max_health
         self.is_playing = False
+        self.over.play()
 
     def update(self, screen):
            #appliquer l image du joueur

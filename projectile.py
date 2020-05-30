@@ -15,6 +15,12 @@ class Projectile(pygame.sprite.Sprite):
         self.rect.y = player.rect.y + (player.image.get_width()/2)
         self.origine_image = self.image
         self.angle = 0
+        #import tir sound
+        self.tir = pygame.mixer.Sound('assets/sounds/tir.ogg')
+        self.tir.set_volume(100)
+        self.tir.play()
+        
+
 
     def rotate(self):
         #tourner le projectile
