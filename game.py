@@ -1,6 +1,8 @@
 import pygame
+import random
 from player import Player
 from monster import Monster
+from comet import Comet
 
 #crere une seconde classe qui va representer le jeu
 
@@ -17,6 +19,9 @@ class Game:
         self.all_players.add(self.player)
         #groupe de monster
         self.all_monster = pygame.sprite.Group()
+        #groupe de comet
+        self.all_comet = pygame.sprite.Group()
+        #self.all_comet_num = random.randint(1,3)
         self.pressed = {}
         self.over = pygame.mixer.Sound('assets/sounds/game_over.ogg')
 
@@ -25,10 +30,13 @@ class Game:
         self.is_playing = True
         self.spawn_monster()
         self.spawn_monster()
+        self.spawn_comet()            
+        self.spawn_comet()
 
     def game_over(self):
         #remettre le jeu a neuf, retirer les monstres, remettre le joueur a 100 de vie et remettre le jeu en attente
         self.all_monster = pygame.sprite.Group()
+        self.all_comet = pygame.sprite.Group()
         self.player.health = self.player.max_health
         self.is_playing = False
         self.over.play()
@@ -49,11 +57,18 @@ class Game:
             monster.forward()
             monster.update_health_bar(screen)
 
+        #recuper les comets
+        for comet in self.all_comet:
+            comet.down()
+
         #appliquer l ensemble des images de mon groupe de projectiles
         self.player.all_projectiles.draw(screen)
 
         #appliquer l'ensemble des images du group de monster
         self.all_monster.draw(screen)
+
+        #appliqer lénsemble des comets 
+        self.all_comet.draw(screen)
 
         #verifier si le joueur souhaite aller a gauche ou a droite
         if self.pressed.get(pygame.K_RIGHT) and self.player.rect.x + self.player.rect.width < screen.get_width():
@@ -66,3 +81,7 @@ class Game:
 
     def spawn_monster(self):
         self.all_monster.add(Monster(self))
+
+    #def des comets
+    def spawn_comet(self):
+        self.all_comet.add(Comet(self))
